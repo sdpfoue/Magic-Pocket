@@ -1,0 +1,58 @@
+# default rules 
+  
+default_index:
+  url:   /:module
+  param: { action: index }
+
+show:
+  url: /show/:action/:id.html
+  param: { module : show }  
+  
+
+
+user_item:
+  url: /user/:id/index.html
+  class:   sfPropelRoute
+  options: { model: User, type: object }
+  param: { module: user, action: item }
+
+user_wanted:
+  url: /user/:id/wanted.html
+  class:   sfPropelRoute
+  options: { model: User, type: object }
+  param: { module: user, action: wanted }
+  
+user_book:
+  url: /user/:id/book.html
+  class:   sfPropelRoute
+  options: { model: User, type: object }
+  param: { module: user, action: book }
+  requirements:
+    id: \d+
+    sf_method: [get]
+
+
+post:
+  url: /post/:action/:id.html
+  param: { module: post }
+
+message:
+  url: /message/:action/:id.html
+  param: { module: message }
+
+user:
+  url: /user/:id.html
+  param: { module: user, action: index }
+
+default:
+  url:   /:module/:action/*.html
+  param: {} 
+
+book:
+  url:  /:action/*.html
+  param: { module: index } 
+  
+
+homepage:
+  url:   /*
+  param: { module: index, action: index }

@@ -1,0 +1,260 @@
+propel:
+  _attributes:
+    package: lib.model
+    defaultIdMethod: native
+  book:
+    _attributes: { phpName: Book }
+    id: { type: INTEGER, size: '10', primaryKey: true, autoIncrement: true, required: true }
+    user_id: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    isbn: { type: VARCHAR, size: '20', required: false, defaultValue: '0' }
+    title: { type: VARCHAR, size: '150', required: true }
+    edition: { type: VARCHAR, size: '20', required: false }
+    author: { type: VARCHAR, size: '300', required: false }
+    price: { type: DECIMAL, size: '6', scale: '2', required: true }
+    publisher: { type: VARCHAR, size: '255', required: false }
+    publish_date: { type: VARCHAR, size: '50', required: false }
+    cover: { type: VARCHAR, size: '255', required: false }
+    University: { type: VARCHAR, size: '50', required: false }
+    description: { type: LONGVARCHAR, required: false }
+    viewed: { type: SMALLINT, size: '6', required: true }
+    issold: { type: TINYINT, size: '4', required: true }
+    created_at: { type: TIMESTAMP, required: true }
+    updated_at: { type: TIMESTAMP, required: true }
+    city_id: { type: INTEGER, size: '10', required: true, foreignTable: city, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    address: { type: VARCHAR, size: '255', required: false }
+    link: { type: VARCHAR, size: '500', required: false }
+    lastprompt: { type: TIMESTAMP, required: true }
+    ip: { type: VARCHAR, size: '15', required: true }
+    ip_address: { type: VARCHAR, size: '255', required: true }
+    comment_number: { type: INTEGER, size: '10', required: true }
+    new_comment_number: { type: INTEGER, size: '10', required: true }
+    reply_number: { type: INTEGER, size: '10', required: true }
+    _indexes: { user_id: [user_id], address_id: [city_id] }
+  book_comment:
+    _attributes: { phpName: BookComment }
+    id: { type: INTEGER, size: '10', primaryKey: true, autoIncrement: true, required: true }
+    book_id: { type: INTEGER, size: '10', required: true, foreignTable: book, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    user_id: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    body: { type: LONGVARCHAR, required: true }
+    created_at: { type: TIMESTAMP, required: true }
+    updated_at: { type: TIMESTAMP, required: true }
+    ip: { type: VARCHAR, size: '15', required: true }
+    ip_address: { type: VARCHAR, size: '255', required: true }
+    owner_reply: { type: LONGVARCHAR, required: true }
+    reply_time: { type: TIMESTAMP, required: true }
+    new_reply: { type: TINYINT, size: '4', required: true }
+    _indexes: { user_id: [user_id], book_id: [book_id] }
+  book_rank:
+    _attributes: { phpName: BookRank }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    keywords: { type: VARCHAR, size: '500', required: true }
+    times: { type: INTEGER, size: '11', required: true, defaultValue: '0' }
+    _indexes: { keywords: [keywords], keywords_2: [keywords] }
+  book_report:
+    _attributes: { phpName: BookReport }
+    user_id: { type: INTEGER, size: '10', primaryKey: true, required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    book_id: { type: INTEGER, size: '11', primaryKey: true, required: true, foreignTable: book, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    reason: { type: LONGVARCHAR, required: true }
+    created_at: { type: TIMESTAMP, required: true }
+    ip: { type: VARCHAR, size: '15', required: true }
+    ip_address: { type: VARCHAR, size: '255', required: true }
+    _indexes: { book_id: [book_id] }
+  category:
+    _attributes: { phpName: Category }
+    id: { type: TINYINT, size: '3', primaryKey: true, autoIncrement: true, required: true }
+    category_name: { type: VARCHAR, size: '50', required: true }
+    rank: { type: SMALLINT, size: '6', required: true }
+  city:
+    _attributes: { phpName: City }
+    id: { type: INTEGER, size: '10', primaryKey: true, autoIncrement: true, required: true }
+    name: { type: VARCHAR, size: '50', required: true }
+    eng_name: { type: VARCHAR, size: '50', required: true }
+    rank: { type: SMALLINT, size: '6', required: true }
+  comments:
+    _attributes: { phpName: Comments }
+    id: { type: INTEGER, size: '10', primaryKey: true, autoIncrement: true, required: true }
+    category: { type: INTEGER, size: '11', primaryKey: true, required: true, defaultValue: '0' }
+    item_id: { type: INTEGER, size: '10', required: true }
+    user_id: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    body: { type: LONGVARCHAR, required: true }
+    owner_reply: { type: LONGVARCHAR, required: false }
+    reply_time: { type: TIMESTAMP, required: false }
+    new_reply: { type: TINYINT, size: '4', required: false }
+    created_at: { type: TIMESTAMP, required: true }
+    updated_at: { type: TIMESTAMP, required: true }
+    ip: { type: VARCHAR, size: '15', required: true }
+    ip_address: { type: VARCHAR, size: '255', required: true }
+    _indexes: { user_id: [user_id] }
+  currency:
+    _attributes: { phpName: Currency }
+    id: { type: TINYINT, size: '3', primaryKey: true, autoIncrement: true, required: true }
+    currency_name: { type: VARCHAR, size: '5', required: true }
+    eng_name: { type: VARCHAR, size: '5', required: true }
+  item:
+    _attributes: { phpName: Item }
+    id: { type: INTEGER, size: '10', primaryKey: true, autoIncrement: true, required: true }
+    user_id: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    category_id: { type: TINYINT, size: '3', required: true, foreignTable: category, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    item_name: { type: VARCHAR, size: '100', required: true }
+    item_detail: { type: LONGVARCHAR, required: true }
+    item_price: { type: DECIMAL, size: '8', scale: '2', required: true }
+    pic1: { type: VARCHAR, size: '255', required: false }
+    pic2: { type: VARCHAR, size: '255', required: false }
+    pic3: { type: VARCHAR, size: '255', required: false }
+    pic4: { type: VARCHAR, size: '255', required: false }
+    link: { type: VARCHAR, size: '500', required: false }
+    created_at: { type: TIMESTAMP, required: true }
+    updated_at: { type: TIMESTAMP, required: true }
+    lastprompt: { type: TIMESTAMP, required: true }
+    viewed: { type: SMALLINT, size: '6', required: true }
+    issold: { type: TINYINT, size: '4', required: true }
+    city_id: { type: INTEGER, size: '10', required: true, foreignTable: city, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    address: { type: VARCHAR, size: '255', required: false }
+    ip: { type: VARCHAR, size: '15', required: true }
+    ip_address: { type: VARCHAR, size: '255', required: true }
+    comment_number: { type: INTEGER, size: '10', required: true }
+    reply_number: { type: INTEGER, size: '10', required: true }
+    new_comment_number: { type: INTEGER, size: '10', required: true }
+    _indexes: { category_id: [category_id], user_id: [user_id], city_id: [city_id] }
+  item_comment:
+    _attributes: { phpName: ItemComment }
+    id: { type: INTEGER, size: '10', primaryKey: true, autoIncrement: true, required: true }
+    item_id: { type: INTEGER, size: '10', required: true, foreignTable: item, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    user_id: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    body: { type: LONGVARCHAR, required: true }
+    owner_reply: { type: LONGVARCHAR, required: false }
+    reply_time: { type: TIMESTAMP, required: false }
+    new_reply: { type: TINYINT, size: '4', required: false }
+    created_at: { type: TIMESTAMP, required: true }
+    updated_at: { type: TIMESTAMP, required: true }
+    ip: { type: VARCHAR, size: '15', required: true }
+    ip_address: { type: VARCHAR, size: '255', required: true }
+    _indexes: { book_id: [item_id], user_id: [user_id] }
+  item_rank:
+    _attributes: { phpName: ItemRank }
+    id: { type: INTEGER, size: '10', primaryKey: true, autoIncrement: true, required: true }
+    keywords: { type: VARCHAR, size: '500', required: true }
+    times: { type: INTEGER, size: '11', required: true }
+    _indexes: { keywords: [keywords] }
+  item_report:
+    _attributes: { phpName: ItemReport }
+    user_id: { type: INTEGER, size: '10', primaryKey: true, required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    item_id: { type: INTEGER, size: '11', primaryKey: true, required: true, foreignTable: item, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    reason: { type: LONGVARCHAR, required: true }
+    created_at: { type: TIMESTAMP, required: true }
+    ip: { type: VARCHAR, size: '15', required: true }
+    ip_address: { type: VARCHAR, size: '255', required: true }
+    _indexes: { item_id: [item_id] }
+  job:
+    _attributes: { phpName: Job }
+    id: { type: INTEGER, size: '10', primaryKey: true, autoIncrement: true, required: true }
+    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    title: { type: VARCHAR, size: '100', required: true }
+    city_id: { type: INTEGER, size: '11', required: true, foreignTable: city, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    experience: { type: TINYINT, size: '4', required: true }
+    type: { type: TINYINT, size: '4', required: true }
+    wage: { type: INTEGER, size: '11', required: true, defaultValue: '0' }
+    gender: { type: VARCHAR, size: '5', required: true }
+    leasttime: { type: INTEGER, size: '11', required: true }
+    address: { type: VARCHAR, size: '200', required: true }
+    postcode: { type: INTEGER, size: '4', required: true, defaultValue: '0' }
+    link: { type: VARCHAR, size: '500', required: true }
+    detail: { type: LONGVARCHAR, required: true }
+    isfind: { type: TINYINT, size: '4', required: true }
+    ip: { type: VARCHAR, size: '15', required: true }
+    ipaddr: { type: VARCHAR, size: '50', required: true }
+    created_at: { type: TIMESTAMP, required: true }
+    updated_at: { type: TIMESTAMP, required: true }
+    prompted_at: { type: TIMESTAMP, required: true }
+    viewed: { type: INTEGER, size: '11', required: true }
+    comment_number: { type: INTEGER, size: '11', required: true }
+    new_comment_number: { type: INTEGER, size: '11', required: true }
+    _indexes: { user_id: [user_id], city_id: [city_id] }
+  message:
+    _attributes: { phpName: Message }
+    id: { type: INTEGER, size: '10', primaryKey: true, autoIncrement: true, required: true }
+    from_id: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
+    receive_id: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
+    title: { type: VARCHAR, size: '50', required: true }
+    body: { type: LONGVARCHAR, required: true }
+    time: { type: TIMESTAMP, required: true }
+    isread: { type: TINYINT, size: '4', required: true }
+    ip: { type: VARCHAR, size: '16', required: true }
+    ipaddr: { type: VARCHAR, size: '50', required: true }
+    delbysender: { type: TINYINT, size: '4', required: true }
+    delbyreceiver: { type: TINYINT, size: '4', required: true }
+    _indexes: { from_id: [from_id], receive_id: [receive_id] }
+  recent_book:
+    _attributes: { phpName: RecentBook }
+    user_id: { type: INTEGER, size: '10', primaryKey: true, required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    book_id: { type: INTEGER, size: '10', primaryKey: true, required: true, foreignTable: book, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    updated_at: { type: TIMESTAMP, required: true }
+    _indexes: { user_id: [user_id], book_id: [book_id] }
+  recent_item:
+    _attributes: { phpName: RecentItem }
+    user_id: { type: INTEGER, size: '10', primaryKey: true, required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    item_id: { type: INTEGER, size: '10', primaryKey: true, required: true, foreignTable: item, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    updated_at: { type: TIMESTAMP, required: true }
+    _indexes: { item_id: [item_id] }
+  universities:
+    _attributes: { phpName: Universities }
+    id: { type: TINYINT, size: '3', primaryKey: true, autoIncrement: true, required: true }
+    name: { type: VARCHAR, size: '50', required: true }
+    ispop: { type: TINYINT, size: '4', required: true }
+    _indexes: { name: [name] }
+  user:
+    _attributes: { phpName: User }
+    id: { type: INTEGER, size: '10', primaryKey: true, autoIncrement: true, required: true }
+    name: { type: VARCHAR, size: '8', required: true }
+    password: { type: VARCHAR, size: '32', required: true }
+    temp_email: { type: VARCHAR, size: '255', required: true }
+    email: { type: VARCHAR, size: '30', required: true }
+    city_id: { type: INTEGER, size: '10', required: false, foreignTable: city, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
+    address: { type: VARCHAR, size: '255', required: false }
+    mobile: { type: VARCHAR, size: '10', required: true }
+    qq: { type: VARCHAR, size: '20', required: true }
+    msn: { type: VARCHAR, size: '50', required: true }
+    uuid: { type: VARCHAR, size: '32', required: true }
+    pubemail: { type: TINYINT, size: '1', required: true }
+    pubmobile: { type: TINYINT, size: '1', required: true }
+    item_number: { type: INTEGER, size: '11', required: true, defaultValue: '0' }
+    login_times: { type: INTEGER, size: '11', required: true, defaultValue: '0' }
+    last_login: { type: TIMESTAMP, required: true }
+    regip: { type: VARCHAR, size: '15', required: true }
+    lastip: { type: VARCHAR, size: '15', required: true }
+    regipaddr: { type: VARCHAR, size: '255', required: true }
+    lastipaddr: { type: VARCHAR, size: '255', required: true }
+    created_at: { type: TIMESTAMP, required: true }
+    updated_at: { type: TIMESTAMP, required: true }
+    approve: { type: TINYINT, size: '1', required: true }
+    mail_message: { type: TINYINT, size: '4', required: true, defaultValue: '1' }
+    mail_comment: { type: TINYINT, size: '4', required: true, defaultValue: '1' }
+    mail_reply: { type: TINYINT, size: '4', required: true, defaultValue: '1' }
+    _indexes: { city_id: [city_id] }
+    _uniques: { user_name: [name] }
+  wanted:
+    _attributes: { phpName: Wanted }
+    id: { type: INTEGER, size: '10', primaryKey: true, autoIncrement: true, required: true }
+    user_id: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    name: { type: VARCHAR, size: '150', required: true }
+    description: { type: LONGVARCHAR, required: true }
+    viewed: { type: SMALLINT, size: '6', required: true }
+    issold: { type: TINYINT, size: '4', required: true }
+    created_at: { type: TIMESTAMP, required: true }
+    updated_at: { type: TIMESTAMP, required: true }
+    city_id: { type: INTEGER, size: '10', required: true, foreignTable: city, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
+    address: { type: VARCHAR, size: '500', required: false }
+    link: { type: VARCHAR, size: '255', required: false }
+    ip: { type: VARCHAR, size: '15', required: true }
+    ip_address: { type: VARCHAR, size: '255', required: true }
+    _indexes: { user_id: [user_id], city_id: [city_id] }
+  website:
+    _attributes: { phpName: Website }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    title: { type: VARCHAR, size: '255', required: true }
+    eng_title: { type: VARCHAR, size: '255', required: true }
+    email: { type: VARCHAR, size: '255', required: true }
+    descryption: { type: LONGVARCHAR, required: true }
+    agreement: { type: LONGVARCHAR, required: true }
+    key_word: { type: VARCHAR, size: '100', required: true }
+    footer: { type: LONGVARCHAR, required: true }

@@ -1,0 +1,10 @@
+fields:
+  oldp:
+    required:
+      msg:       请输入当前密码
+  pwd:
+    required:
+      msg:       请输入新密码
+  conpwd:
+    required:
+      msg:       请再次输入新密码
